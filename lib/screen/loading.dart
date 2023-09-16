@@ -36,17 +36,14 @@ class _LoadingState extends State<Loading> {
             Center(
               child: Image.asset('asset/logo.webp'),
             ),
-  Padding(
-    padding: const EdgeInsets.only(top: 15),
-    child: Text("Uni,Fort et Impattable"),
-  ),
+            const Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: Text("Uni,Fort et Impattable"),
+            ),
             const Spacer(),
- 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
-              
                 CircleAvatar(
                   child: Image.asset('asset/sp/a.png'),
                   backgroundColor: Colors.white,
@@ -58,7 +55,6 @@ class _LoadingState extends State<Loading> {
                   backgroundColor: Colors.white,
                   radius: 16,
                 ),
-            
                 const Padding(padding: EdgeInsets.only(left: 10)),
                 CircleAvatar(
                   child: Image.asset('asset/sp/d.jpg'),
