@@ -4,8 +4,8 @@ import 'dart:core';
 import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/block_state.dart';
 
-class ArticleBloc extends Bloc<BlocEvent, BlocState> {
-  ArticleBloc() : super(BlocStateUninitialized()) {
+class PostBloc extends Bloc<BlocEvent, BlocState> {
+  PostBloc() : super(BlocStateUninitialized()) {
     on<BlocEventFetch>(_onBlocEventFetch);
     // on<BlocEventArticleLotFetch>(_onBlocEventFetchLot);
     // on<BlocEventFilterFetch>(_onBlocEventFilterFetch);

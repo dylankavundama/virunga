@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:virunga/bloc/bloc_event.dart';
+import 'package:virunga/bloc/post/post_bloc.dart';
 import 'package:virunga/screen/welcome/Detail.dart';
 
 import '../model/post.dart';
@@ -12,6 +14,14 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
+  final PostBloc _blocPost = PostBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _blocPost.add(BlocEventFetch());
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenH = MediaQuery.of(context).size.height;
