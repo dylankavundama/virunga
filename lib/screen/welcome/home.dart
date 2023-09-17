@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:virunga/screen/welcome/Detail.dart';
 
 import '../model/post.dart';
@@ -40,6 +41,11 @@ class HomeState extends State<Home> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await Supabase.instance.client.from('').insert({});
+          },
+          child: Icon(Icons.add)),
     );
   }
 }
