@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-Widget cardShimmerProductVente() {
+Widget postShimmer() {
   return SizedBox(
     height: 70,
     width: double.infinity,

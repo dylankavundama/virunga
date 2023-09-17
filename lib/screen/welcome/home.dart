@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/post/post_bloc.dart';
+import 'package:virunga/screen/WIDGET/post_shimmer.dart';
 import 'package:virunga/screen/welcome/Detail.dart';
 
 import '../model/post.dart';
@@ -28,28 +30,36 @@ class HomeState extends State<Home> {
     double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       // backgroundColor: Colors.white12,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //  AppbarW(screenH: screenH, screenW: screenW),
-              const SizedBox(
-                height: 10,
-              ),
-              const TitreAppW(),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
-                  children: posts.map((e) {
-                return ListPost(screenH: screenH, screenW: screenW, post: e);
-              }).toList()),
-            ],
-          ),
-        ),
+      body: BlocBuilder(
+        bloc: _blocPost,
+        builder: (context, state) {
+          return Column(
+            children: List.generate(5, (index) => postShimmer()),
+          );
+        },
+        // child: SingleChildScrollView(
+        //   child: Padding(
+        //     padding: const EdgeInsets.all(8),
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         //  AppbarW(screenH: screenH, screenW: screenW),
+        //         const SizedBox(
+        //           height: 10,
+        //         ),
+        //         const TitreAppW(),
+        //         const SizedBox(
+        //           height: 10,
+        //         ),
+        //         Column(
+        //             children: posts.map((e) {
+        //           return ListPost(screenH: screenH, screenW: screenW, post: e);
+        //         }).toList()),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
