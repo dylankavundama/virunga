@@ -43,9 +43,15 @@ class HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await Supabase.instance.client.from('').insert({});
+            await Supabase.instance.client.from('Post').insert({
+              'image': 'kabasha',
+              'titre': 'Match kabasha vs dauphin',
+              'description': 'Stade de volcans'
+            }).then((value) {
+              debugPrint(value.toString());
+            });
           },
-          child: Icon(Icons.add)),
+          child: const Icon(Icons.add)),
     );
   }
 }
