@@ -6,15 +6,17 @@ class Post {
   String? description;
 
   Post({required this.id, this.image, this.titre, this.description});
+
+  factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 }
 
 Post _$PostFromJson(Map<String, dynamic> json) {
   return Post(
       id: json['id'] as int,
-      image: json['designation'] as String?,
-      titre: json['stock'] == null ? null : json['stock'] as String?,
+      image: json['image'] as String?,
+      titre: json['titre'] == null ? null : json['titre'] as String?,
       description:
-          json['stockPerime'] == null ? null : json['stockPerime'] as String?);
+          json['description'] == null ? null : json['description'] as String?);
 }
 
 // List<Post> posts = [

@@ -5,6 +5,7 @@ import 'dart:core';
 
 import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/block_state.dart';
+import 'package:virunga/screen/model/post.dart';
 
 class PostBloc extends Bloc<BlocEvent, BlocState> {
   PostBloc() : super(BlocStateUninitialized()) {
@@ -22,12 +23,13 @@ class PostBloc extends Bloc<BlocEvent, BlocState> {
       // final data = await fetchAllArticles(search: event.search);
       final data = await Supabase.instance.client.from('Post').select();
       debugPrint(data.toString());
-      // if (data == null) {
-      emit(BlocStateError(error: null));
-      // } else {
-      //   final list = data.data.map((json) => Article.fromJson(json)).toList();
-      //   emit(BlocStateLoaded(data: list));
-      // }
+      if (data == null) {
+        emit(BlocStateError(error: null));
+      } else {
+        final list = data.map((json) => Post.fromJson(json)).toList();
+        debugPrint(list.toString());
+        emit(BlocStateLoaded(data: list));
+      }
     } catch (e) {
       print("Error fetching all ====> ${e.toString()}");
       emit(BlocStateError(error: e));
