@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:virunga/bloc/bloc_event.dart';
+import 'package:virunga/bloc/block_state.dart';
 import 'package:virunga/bloc/post/post_bloc.dart';
 import 'package:virunga/screen/WIDGET/post_shimmer.dart';
 import 'package:virunga/screen/welcome/Detail.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../model/post.dart';
 
@@ -46,18 +48,97 @@ class HomeState extends State<Home> {
                     height: 10,
                   ),
                   BlocBuilder(
-                    bloc: _blocPost,
-                    builder: (context, state) {
-                      return Column(
-                        children: List.generate(5, (index) => postShimmer()),
-                      );
-                    },
-                    // Column(
-                    //       children: posts.map((e) {
-                    //     return ListPost(screenH: screenH, screenW: screenW, post: e);
-                    //   }).toList()
-                    //   ),
-                  ),
+                      bloc: _blocPost,
+                      builder: (context, state) {
+                        if (state is BlocStateUninitialized ||
+                            state is BlocStateLoading) {
+                          return Column(
+                            children:
+                                List.generate(5, (index) => postShimmer()),
+                          );
+                        }
+                        if (state is BlocStateError) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/error_server.svg',
+                                  height: 150.0,
+                                  width: 150.0,
+                                  alignment: Alignment.center,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  "Erreur survenue",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w100),
+                                )
+                              ],
+                            ),
+                          );
+                        }
+                        if (state is BlocStateLoaded) {
+                          if (state.data == null || state.data.isEmpty) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/empty.svg',
+                                    height: 150.0,
+                                    width: 150.0,
+                                    alignment: Alignment.center,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "Aucun médicament enregistré",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w100),
+                                  )
+                                ],
+                              ),
+                            );
+                          } else {
+                            return ListView.builder(
+                                itemCount: state.data.length,
+                                itemBuilder: (context, index) => InkWell());
+
+                            // Column(
+                            //       children: posts.map((e) {
+                            //     return ListPost(screenH: screenH, screenW: screenW, post: e);
+                            //   }).toList()
+                            //   ),
+                          }
+                        }
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/error_server.svg',
+                                height: 150.0,
+                                width: 150.0,
+                                alignment: Alignment.center,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Erreur survenue",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w100),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
                 ])),
       ),
       floatingActionButton: FloatingActionButton(
