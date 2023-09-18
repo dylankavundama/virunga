@@ -26,7 +26,7 @@ class PostBloc extends Bloc<BlocEvent, BlocState> {
       if (data == null) {
         emit(BlocStateError(error: null));
       } else {
-        final list = data.map((json) => Post.fromJson(json)).toList();
+        List list = data.map((json) => Post.fromJson(json)).toList();
         debugPrint(list.toString());
         emit(BlocStateLoaded(data: list));
       }
