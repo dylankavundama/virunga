@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:core';
 
 import 'package:virunga/bloc/bloc_event.dart';
@@ -18,14 +20,13 @@ class PostBloc extends Bloc<BlocEvent, BlocState> {
     emit(BlocStateLoading());
     try {
       // final data = await fetchAllArticles(search: event.search);
-      // final data = await _apiProvider.fetcMedicaments(
-      //     search: event.search,
-      //     struct: StaticsData.structureConnected!.structure!.id.toString());
+      final data = await Supabase.instance.client.from('Post').select();
+      debugPrint(data.toString());
       // if (data == null) {
-      //   emit(BlocStateError(error: null));
+      emit(BlocStateError(error: null));
       // } else {
       //   final list = data.data.map((json) => Article.fromJson(json)).toList();
-      // emit(BlocStateLoaded(data: list));
+      //   emit(BlocStateLoaded(data: list));
       // }
     } catch (e) {
       print("Error fetching all ====> ${e.toString()}");
