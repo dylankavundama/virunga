@@ -2,25 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget postShimmer() {
-  return SizedBox(
-    height: 70,
-    width: double.infinity,
-    child: Row(
-      children: [
-        Shimmer.fromColors(
-          baseColor: const Color.fromARGB(255, 231, 230, 230),
-          highlightColor: const Color.fromARGB(255, 245, 244, 244),
-          child: Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(100)),
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Column(
+  return Padding(
+    padding: const EdgeInsets.only(left: 15, right: 15),
+    child: SizedBox(
+        height: 200,
+        width: double.infinity,
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -28,8 +15,8 @@ Widget postShimmer() {
               baseColor: Color.fromARGB(255, 231, 230, 230),
               highlightColor: Color.fromARGB(255, 245, 244, 244),
               child: Container(
-                height: 15,
-                width: 200,
+                height: 150,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
@@ -41,8 +28,8 @@ Widget postShimmer() {
               baseColor: const Color.fromARGB(255, 231, 230, 230),
               highlightColor: const Color.fromARGB(255, 245, 244, 244),
               child: Container(
-                height: 12,
-                width: 100,
+                height: 20,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
@@ -50,8 +37,6 @@ Widget postShimmer() {
               ),
             )
           ],
-        )
-      ],
-    ),
+        )),
   );
 }
