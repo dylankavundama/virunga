@@ -30,36 +30,35 @@ class HomeState extends State<Home> {
     double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       // backgroundColor: Colors.white12,
-      body: BlocBuilder(
-        bloc: _blocPost,
-        builder: (context, state) {
-          return Column(
-            children: List.generate(5, (index) => postShimmer()),
-          );
-        },
-        // child: SingleChildScrollView(
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(8),
-        //     child: Column(
-        //       mainAxisAlignment: MainAxisAlignment.start,
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         //  AppbarW(screenH: screenH, screenW: screenW),
-        //         const SizedBox(
-        //           height: 10,
-        //         ),
-        //         const TitreAppW(),
-        //         const SizedBox(
-        //           height: 10,
-        //         ),
-        //         Column(
-        //             children: posts.map((e) {
-        //           return ListPost(screenH: screenH, screenW: screenW, post: e);
-        //         }).toList()),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //  AppbarW(screenH: screenH, screenW: screenW),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const TitreAppW(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  BlocBuilder(
+                    bloc: _blocPost,
+                    builder: (context, state) {
+                      return Column(
+                        children: List.generate(5, (index) => postShimmer()),
+                      );
+                    },
+                    // Column(
+                    //       children: posts.map((e) {
+                    //     return ListPost(screenH: screenH, screenW: screenW, post: e);
+                    //   }).toList()
+                    //   ),
+                  ),
+                ])),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
