@@ -107,25 +107,12 @@ class HomeState extends State<Home> {
                             );
                           } else {
                             return Column(
-                              children: state.data.map((e) {
-                                return ListPost(
-                                    screenH: screenH,
-                                    screenW: screenW,
-                                    post: e);
-                              }),
-                            );
-                            // ListView.builder(
-                            //     itemCount: state.data.length,
-                            //     itemBuilder: (context, index) => ListPost(
-                            //         screenH: screenH,
-                            //         screenW: screenW,
-                            //         post: state.data[index]));
-
-                            // Column(
-                            //       children: posts.map((e) {
-                            //     return ListPost(screenH: screenH, screenW: screenW, post: e);
-                            //   }).toList()
-                            //   ),
+                                children: List.generate(
+                                    state.data.length,
+                                    (index) => ListPost(
+                                        screenH: screenH,
+                                        screenW: screenW,
+                                        post: state.data[index])));
                           }
                         }
                         return Center(
