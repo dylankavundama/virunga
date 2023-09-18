@@ -63,7 +63,7 @@ class HomeState extends State<Home> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  'assets/images/error_server.svg',
+                                  'asset/images/error_server.svg',
                                   height: 150.0,
                                   width: 150.0,
                                   alignment: Alignment.center,
@@ -88,7 +88,7 @@ class HomeState extends State<Home> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
-                                    'assets/images/empty.svg',
+                                    'asset/images/empty.svg',
                                     height: 150.0,
                                     width: 150.0,
                                     alignment: Alignment.center,
@@ -122,7 +122,7 @@ class HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
-                                'assets/images/error_server.svg',
+                                'asset/images/error_server.svg',
                                 height: 150.0,
                                 width: 150.0,
                                 alignment: Alignment.center,
@@ -177,9 +177,9 @@ class ListPost extends StatelessWidget {
           Navigator.push(context, MaterialPageRoute(builder: ((context) {
             //  return SecondPage(image: post.image);
             return Detail(
-              image: post.image,
-              titre: post.titre,
-              desc: post.descri,
+              image: post.image!,
+              titre: post.titre!,
+              desc: post.description!,
             );
           })));
         },
@@ -198,7 +198,7 @@ class ListPost extends StatelessWidget {
 
             Padding(padding: EdgeInsets.only(top: 5)),
             Text(
-              "${post.descri}",
+              "${post.description}",
               textAlign: TextAlign.justify,
               maxLines: 2,
               style: const TextStyle(
@@ -220,7 +220,7 @@ class ListPost extends StatelessWidget {
             ),
 
             Image.asset(
-              post.image,
+              post.image!,
               height: screenH * 0.3,
               width: screenW,
               fit: BoxFit.cover,
