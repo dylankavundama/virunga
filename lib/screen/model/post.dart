@@ -50,7 +50,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
 //     5,
 //     'asset/post/a.jpg',
 //     "PRE- SAISON: Le Dc Virunga enchaîne",
-//     "  ",
+//     "Le Daring club Virunga de Goma poursuit ses entraînements afin de bien entamer la reprise du championnat national de Linafoot, Ligue 2. Ce mercredi 26 juillet 2023, nos guerriers étaient présents sur la pelouse synthétique de stade de l'unité sous la supervision du coach Todet Farini.\nOn a également vu la présence de notre préparateur physique Guesmi Mohammed Akrem qui est de retour à Goma après ses vacances passées chez lui à Tunisie.\n Les séances d'entraînement du jeudi et vendredi s'effectueront dans la meilleure salle de musculation de la ville de Goma, à savoir OK GYM située dans le bâtiment de la BDEGL. Nos athlètes seront de retour le lundi prochain sur la pelouse de stade de l'unité à 8h30 avec aussi des nouvelles figures.",
 //   ),
 //   Post(
 //       5,

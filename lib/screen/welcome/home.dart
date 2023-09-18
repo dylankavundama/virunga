@@ -47,81 +47,17 @@ class HomeState extends State<Home> {
                   const SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
-                    height: screenH * 0.8,
-                    child: BlocBuilder(
-                        bloc: _blocPost,
-                        builder: (context, state) {
-                          if (state is BlocStateUninitialized ||
-                              state is BlocStateLoading) {
-                            return Column(
-                              children:
-                                  List.generate(5, (index) => postShimmer()),
-                            );
-                          }
-                          if (state is BlocStateError) {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'asset/images/error_server.svg',
-                                    height: 150.0,
-                                    width: 150.0,
-                                    alignment: Alignment.center,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Text(
-                                    "Erreur survenue",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w100),
-                                  )
-                                ],
-                              ),
-                            );
-                          }
-                          if (state is BlocStateLoaded) {
-                            if (state.data == null || state.data.isEmpty) {
-                              return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'asset/images/empty.svg',
-                                      height: 150.0,
-                                      width: 150.0,
-                                      alignment: Alignment.center,
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    const Text(
-                                      "Aucun médicament enregistré",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w100),
-                                    )
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return ListView.builder(
-                                  itemCount: state.data.length,
-                                  itemBuilder: (context, index) => ListPost(
-                                      screenH: screenH,
-                                      screenW: screenW,
-                                      post: state.data[index]));
-
-                              // Column(
-                              //       children: posts.map((e) {
-                              //     return ListPost(screenH: screenH, screenW: screenW, post: e);
-                              //   }).toList()
-                              //   ),
-                            }
-                          }
+                  BlocBuilder(
+                      bloc: _blocPost,
+                      builder: (context, state) {
+                        if (state is BlocStateUninitialized ||
+                            state is BlocStateLoading) {
+                          return Column(
+                            children:
+                                List.generate(5, (index) => postShimmer()),
+                          );
+                        }
+                        if (state is BlocStateError) {
                           return Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -144,8 +80,69 @@ class HomeState extends State<Home> {
                               ],
                             ),
                           );
-                        }),
-                  ),
+                        }
+                        if (state is BlocStateLoaded) {
+                          if (state.data == null || state.data.isEmpty) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'asset/images/empty.svg',
+                                    height: 150.0,
+                                    width: 150.0,
+                                    alignment: Alignment.center,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "Aucun médicament enregistré",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w100),
+                                  )
+                                ],
+                              ),
+                            );
+                          } else {
+                            return ListView.builder(
+                                itemCount: state.data.length,
+                                itemBuilder: (context, index) => ListPost(
+                                    screenH: screenH,
+                                    screenW: screenW,
+                                    post: state.data[index]));
+
+                            // Column(
+                            //       children: posts.map((e) {
+                            //     return ListPost(screenH: screenH, screenW: screenW, post: e);
+                            //   }).toList()
+                            //   ),
+                          }
+                        }
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'asset/images/error_server.svg',
+                                height: 150.0,
+                                width: 150.0,
+                                alignment: Alignment.center,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Erreur survenue",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w100),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                  // ),
                 ])),
       ),
       floatingActionButton: FloatingActionButton(
