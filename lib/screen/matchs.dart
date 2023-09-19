@@ -22,9 +22,9 @@ class _MatchState extends State<Match> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
-                children: ListMatchJouer.map((e) {
-                  return MatchJouer(MatchJ: e);
-                }).toList(),
+                // children: ListMatchJouer.map((e) {
+                //   return MatchJouer(MatchJ: e);
+                // }).toList(),
               ),
               Text("Prochain Match"),
               Column(
