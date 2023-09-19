@@ -41,7 +41,7 @@ class _MatchState extends State<Match> {
                     // if (state is BlocStateUninitialized ||
                     //     state is BlocStateLoading) {
                     return Column(
-                      children: List.generate(5, (index) => matchShimmer()),
+                      children: List.generate(3, (index) => matchShimmer()),
                     );
                     // }
                     // if (state is BlocStateError) {
