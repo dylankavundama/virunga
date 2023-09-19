@@ -24,11 +24,10 @@ class BlocEventFetch extends BlocEvent {
   String toString() => 'BlocEventFetch';
 }
 
-class BlocEventOnlineFetch extends BlocEvent {
-  final String? structure;
-  BlocEventOnlineFetch({this.structure});
+class BlocEventUnPlayedMatchFetch extends BlocEvent {
+  BlocEventUnPlayedMatchFetch();
   @override
-  String toString() => 'BlocEventOnlineFetch';
+  String toString() => 'BlocEventUnPlayedMatchFetch';
 }
 
 class BlocEventLastSalesFetch extends BlocEvent {

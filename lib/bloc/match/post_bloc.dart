@@ -11,6 +11,7 @@ import 'package:virunga/screen/model/post.dart';
 class MatchBloc extends Bloc<BlocEvent, BlocState> {
   MatchBloc() : super(BlocStateUninitialized()) {
     on<BlocEventFetch>(_onBlocEventFetch);
+    on<BlocEventUnPlayedMatchFetch>(_onBlocEventUnPlayedFetch);
     // on<BlocEventArticleLotFetch>(_onBlocEventFetchLot);
     // on<BlocEventFilterFetch>(_onBlocEventFilterFetch);
     // on<BlocEventTotalFetch>(_onBlocEventTotalFetch);
@@ -22,7 +23,32 @@ class MatchBloc extends Bloc<BlocEvent, BlocState> {
     emit(BlocStateLoading());
     try {
       // final data = await fetchAllArticles(search: event.search);
-      final data = await Supabase.instance.client.from('Match').select();
+      final data = await Supabase.instance.client
+          .from('Match')
+          .select()
+          .filter('isPlayed', 'eq', true);
+      debugPrint(data.toString());
+      if (data == null) {
+        emit(BlocStateError(error: null));
+      } else {
+        List list = data.map((json) => MatchJouer.fromJson(json)).toList();
+        debugPrint(list.toString());
+        emit(BlocStateLoaded(data: list));
+      }
+    } catch (e) {
+      print("Error fetching all ====> ${e.toString()}");
+      emit(BlocStateError(error: e));
+    }
+  }
+
+  void _onBlocEventUnPlayedFetch(event, emit) async {
+    emit(BlocStateLoading());
+    try {
+      // final data = await fetchAllArticles(search: event.search);
+      final data = await Supabase.instance.client
+          .from('Match')
+          .select()
+          .filter('isPlayed', 'eq', false);
       debugPrint(data.toString());
       if (data == null) {
         emit(BlocStateError(error: null));
