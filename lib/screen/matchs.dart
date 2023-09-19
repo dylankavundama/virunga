@@ -6,6 +6,7 @@ import 'package:virunga/bloc/match/match_bloc.dart';
 import 'package:virunga/screen/WIDGET/match_shimmer.dart';
 import 'package:virunga/screen/model/matchAvenir.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:virunga/screen/model/matchJouer.dart';
 
 class Match extends StatefulWidget {
   @override
@@ -95,12 +96,15 @@ class _MatchState extends State<Match> {
                         );
                       } else {
                         return Column(
-                            // children: List.generate(
-                            //     state.data.length,
-                            //     (index) => ListPost(
-                            //         screenH: screenH,
-                            //         screenW: screenW,
-                            //         post: state.data[index]))
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: List.generate(
+                                state.data.length,
+                                (index) =>
+                                    MatchJouerScreen(MatchJ: state.data[index]))
+                            // state.data.map((e) {
+                            //   return MatchJouer(MatchJ: e);
+                            // }).toList(),
                             );
                       }
                     }
@@ -134,13 +138,108 @@ class _MatchState extends State<Match> {
               //   }).toList(),
               // ),
               Text("Prochain Match"),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: ListMatchAvenir.map((e) {
-                  return MatchAvenir(MatchAv: e);
-                }).toList(),
-              ),
+              BlocBuilder(
+                  bloc: _blocAvenir,
+                  builder: (context, state) {
+                    if (state is BlocStateUninitialized ||
+                        state is BlocStateLoading) {
+                      return Column(
+                        children: List.generate(3, (index) => matchShimmer()),
+                      );
+                    }
+                    if (state is BlocStateError) {
+                      debugPrint("============= IS ERROR ==============");
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: SvgPicture.asset(
+                                'asset/images/error_server.svg',
+                                height: 90.0,
+                                width: 90.0,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Erreur survenue",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w100),
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                    if (state is BlocStateLoaded) {
+                      if (state.data == null || state.data.isEmpty) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'asset/images/empty.svg',
+                                height: 150.0,
+                                width: 150.0,
+                                alignment: Alignment.center,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Aucun médicament enregistré",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w100),
+                              )
+                            ],
+                          ),
+                        );
+                      } else {
+                        return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: List.generate(
+                                state.data.length,
+                                (index) =>
+                                    MatchAvenir(MatchAv: state.data[index]))
+                            // state.data.map((e) {
+                            //   return MatchJouer(MatchJ: e);
+                            // }).toList(),
+                            );
+                      }
+                    }
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'asset/images/error_server.svg',
+                            height: 150.0,
+                            width: 150.0,
+                            alignment: Alignment.center,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            "Erreur survenue",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w100),
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   mainAxisSize: MainAxisSize.max,
+              //   children: ListMatchAvenir.map((e) {
+              //     return MatchAvenir(MatchAv: e);
+              //   }).toList(),
+              // ),
             ],
           ),
         ),
@@ -149,8 +248,8 @@ class _MatchState extends State<Match> {
   }
 }
 
-class MatchJouer extends StatelessWidget {
-  const MatchJouer({
+class MatchJouerScreen extends StatelessWidget {
+  const MatchJouerScreen({
     required this.MatchJ,
     super.key,
   });
@@ -159,8 +258,8 @@ class MatchJouer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
-      padding: EdgeInsets.all(15),
+      margin: const EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+      padding: const EdgeInsets.all(15),
       height: 80,
       foregroundDecoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -171,13 +270,13 @@ class MatchJouer extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage(MatchJ.img1),
+            backgroundImage: NetworkImage(MatchJ.img1),
             radius: 19,
           ),
           Expanded(
             child: Text(
               MatchJ.club1,
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
               maxLines: 1,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
@@ -189,14 +288,14 @@ class MatchJouer extends StatelessWidget {
           Expanded(
             child: Text(
               MatchJ.club2,
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
               maxLines: 1,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           CircleAvatar(
-            backgroundImage: AssetImage(MatchJ.img2),
+            backgroundImage: NetworkImage(MatchJ.img2),
             radius: 19,
           ),
           const SizedBox(
@@ -214,7 +313,7 @@ class MatchAvenir extends StatelessWidget {
     required this.MatchAv,
   });
 
-  final MatchAv;
+  final MatchJouer MatchAv;
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +332,7 @@ class MatchAvenir extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage(MatchAv.img1),
+                backgroundImage: NetworkImage(MatchAv.img1!),
                 radius: 19,
               ),
               Expanded(
@@ -259,12 +358,12 @@ class MatchAvenir extends StatelessWidget {
                 ),
               ),
               CircleAvatar(
-                backgroundImage: AssetImage(MatchAv.img2),
+                backgroundImage: NetworkImage(MatchAv.img2!),
                 radius: 19,
               ),
             ],
           ),
-          Text(MatchAv.date)
+          Text(MatchAv.dateMatch)
         ],
       ),
     );
