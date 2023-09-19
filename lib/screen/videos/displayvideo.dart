@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:virunga/screen/WIDGET/post_shimmer.dart';
 import 'package:virunga/screen/model/video.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:virunga/screen/WIDGET/videoWidget.dart';
@@ -13,6 +15,9 @@ class DislayVideoPage extends StatefulWidget {
 
 class _DislayVideoPageState extends State<DislayVideoPage> {
   late YoutubePlayerController controller;
+  List<Video> videoList = [];
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -21,7 +26,21 @@ class _DislayVideoPageState extends State<DislayVideoPage> {
         initialVideoId: YoutubePlayer.convertUrlToId(url)!,
         flags:
             const YoutubePlayerFlags(mute: false, loop: false, autoPlay: true));
-    videoList.shuffle();
+    fetchVideoList();
+  }
+
+  fetchVideoList() async {
+    setState(() {
+      isLoading = true;
+    });
+    final data = await Supabase.instance.client.from('Video').select();
+    if (data != null && data.isNotEmpty) {
+      videoList = data.map((json) => Video.fromJson(json)).toList();
+      videoList.shuffle();
+    }
+    // setState(() {
+    //   isLoading = false;
+    // });
   }
 
   @override
@@ -48,28 +67,31 @@ class _DislayVideoPageState extends State<DislayVideoPage> {
             const SizedBox(
               height: 10,
             ),
-            Column(
-              children: List.generate(
-                videoList.length,
-                (index) => GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return DislayVideoPage(
-                        video: videoList[index].video,
-                      );
-                    }));
-                  },
-                  child: PostVideoWidget(
-                    screenHeight: screenHeight,
-                    screenWidth: screenWidth,
-                    image: videoList[index].img,
-                    titre: videoList[index].titre,
-            
-                  ),
-                ),
-              ),
-            )
+            isLoading
+                ? Column(
+                    children: List.generate(4, (index) => postShimmer()),
+                  )
+                : Column(
+                    children: List.generate(
+                      videoList.length,
+                      (index) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return DislayVideoPage(
+                              video: videoList[index].video,
+                            );
+                          }));
+                        },
+                        child: PostVideoWidget(
+                          screenHeight: screenHeight,
+                          screenWidth: screenWidth,
+                          image: videoList[index].img,
+                          titre: videoList[index].titre,
+                        ),
+                      ),
+                    ),
+                  )
           ],
         ),
       ),

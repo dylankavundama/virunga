@@ -6,9 +6,10 @@ import 'dart:core';
 import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/block_state.dart';
 import 'package:virunga/screen/model/post.dart';
+import 'package:virunga/screen/model/video.dart';
 
-class PostBloc extends Bloc<BlocEvent, BlocState> {
-  PostBloc() : super(BlocStateUninitialized()) {
+class VideoBloc extends Bloc<BlocEvent, BlocState> {
+  VideoBloc() : super(BlocStateUninitialized()) {
     on<BlocEventFetch>(_onBlocEventFetch);
     // on<BlocEventArticleLotFetch>(_onBlocEventFetchLot);
     // on<BlocEventFilterFetch>(_onBlocEventFilterFetch);
@@ -21,12 +22,12 @@ class PostBloc extends Bloc<BlocEvent, BlocState> {
     emit(BlocStateLoading());
     try {
       // final data = await fetchAllArticles(search: event.search);
-      final data = await Supabase.instance.client.from('Post').select();
+      final data = await Supabase.instance.client.from('Video').select();
       debugPrint(data.toString());
       if (data == null) {
         emit(BlocStateError(error: null));
       } else {
-        List list = data.map((json) => Post.fromJson(json)).toList();
+        List list = data.map((json) => Video.fromJson(json)).toList();
         debugPrint(list.toString());
         emit(BlocStateLoaded(data: list));
       }
