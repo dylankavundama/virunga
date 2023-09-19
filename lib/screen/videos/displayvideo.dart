@@ -15,7 +15,7 @@ class DislayVideoPage extends StatefulWidget {
 
 class _DislayVideoPageState extends State<DislayVideoPage> {
   late YoutubePlayerController controller;
-  List<Video> videoList = [];
+  List videoList = [];
   bool isLoading = false;
 
   @override
