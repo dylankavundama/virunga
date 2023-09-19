@@ -1,4 +1,4 @@
-class Match {
+class MatchJouer {
   int id;
   String club1;
   String club2;
@@ -7,7 +7,7 @@ class Match {
   String? img2;
   String dateMatch;
 
-  Match(
+  MatchJouer(
       {required this.id,
       required this.club1,
       required this.club2,
@@ -16,11 +16,12 @@ class Match {
       this.img2,
       required this.dateMatch});
 
-  factory Match.fromJson(Map<String, dynamic> json) => _$MatchFromJson(json);
+  factory MatchJouer.fromJson(Map<String, dynamic> json) =>
+      _$MatchJouerFromJson(json);
 }
 
-Match _$MatchFromJson(Map<String, dynamic> json) {
-  return Match(
+MatchJouer _$MatchJouerFromJson(Map<String, dynamic> json) {
+  return MatchJouer(
       id: json['id'] as int,
       club1: json['clubDomicile'] as String,
       club2: json['clubExterieur'] as String,
