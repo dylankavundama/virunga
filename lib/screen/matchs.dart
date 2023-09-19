@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:virunga/bloc/bloc_event.dart';
+import 'package:virunga/bloc/block_state.dart';
+import 'package:virunga/bloc/match/post_bloc.dart';
+import 'package:virunga/screen/WIDGET/match_shimmer.dart';
 import 'package:virunga/screen/model/matchAvenir.dart';
 import 'model/matchJouer.dart';
+import 'package:flutter_svg/svg.dart';
 
 class Match extends StatefulWidget {
   @override
@@ -8,6 +14,16 @@ class Match extends StatefulWidget {
 }
 
 class _MatchState extends State<Match> {
+  final MatchBloc _blocJouer = MatchBloc();
+  final MatchBloc _blocAvenir = MatchBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _blocJouer.add(BlocEventFetch());
+    _blocAvenir.add(BlocEventUnPlayedMatchFetch());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,14 +34,103 @@ class _MatchState extends State<Match> {
               const SizedBox(
                 height: 40,
               ),
-              Text("Match Jouer"),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                // children: ListMatchJouer.map((e) {
-                //   return MatchJouer(MatchJ: e);
-                // }).toList(),
-              ),
+              const Text("Match Jouer"),
+              BlocBuilder(
+                  bloc: _blocJouer,
+                  builder: (context, state) {
+                    // if (state is BlocStateUninitialized ||
+                    //     state is BlocStateLoading) {
+                    return Column(
+                      children: List.generate(5, (index) => matchShimmer()),
+                    );
+                    // }
+                    // if (state is BlocStateError) {
+                    //   return Center(
+                    //     child: Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         SvgPicture.asset(
+                    //           'asset/images/error_server.svg',
+                    //           height: 150.0,
+                    //           width: 150.0,
+                    //           alignment: Alignment.center,
+                    //         ),
+                    //         const SizedBox(
+                    //           height: 10,
+                    //         ),
+                    //         const Text(
+                    //           "Erreur survenue",
+                    //           style: TextStyle(
+                    //               fontSize: 20,
+                    //               fontWeight: FontWeight.w100),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   );
+                    // }
+                    // if (state is BlocStateLoaded) {
+                    //   if (state.data == null || state.data.isEmpty) {
+                    //     return Center(
+                    //       child: Column(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: [
+                    //           SvgPicture.asset(
+                    //             'asset/images/empty.svg',
+                    //             height: 150.0,
+                    //             width: 150.0,
+                    //             alignment: Alignment.center,
+                    //           ),
+                    //           const SizedBox(
+                    //             height: 10,
+                    //           ),
+                    //           const Text(
+                    //             "Aucun médicament enregistré",
+                    //             style: TextStyle(
+                    //                 fontSize: 20,
+                    //                 fontWeight: FontWeight.w100),
+                    //           )
+                    //         ],
+                    //       ),
+                    //     );
+                    //   } else {
+                    //     return Column(
+                    //         children: List.generate(
+                    //             state.data.length,
+                    //             (index) => ListPost(
+                    //                 screenH: screenH,
+                    //                 screenW: screenW,
+                    //                 post: state.data[index])));
+                    //   }
+                    // }
+                    // return Center(
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       SvgPicture.asset(
+                    //         'asset/images/error_server.svg',
+                    //         height: 150.0,
+                    //         width: 150.0,
+                    //         alignment: Alignment.center,
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       const Text(
+                    //         "Erreur survenue",
+                    //         style: TextStyle(
+                    //             fontSize: 20, fontWeight: FontWeight.w100),
+                    //       )
+                    //     ],
+                    //   ),
+                    // );
+                  }),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   mainAxisSize: MainAxisSize.max,
+              //   children: ListMatchJouer.map((e) {
+              //     return MatchJouer(MatchJ: e);
+              //   }).toList(),
+              // ),
               Text("Prochain Match"),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
