@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/block_state.dart';
-import 'package:virunga/bloc/match/post_bloc.dart';
+import 'package:virunga/bloc/match/match_bloc.dart';
 import 'package:virunga/screen/WIDGET/match_shimmer.dart';
 import 'package:virunga/screen/model/matchAvenir.dart';
-import 'model/matchJouer.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Match extends StatefulWidget {
@@ -38,91 +37,94 @@ class _MatchState extends State<Match> {
               BlocBuilder(
                   bloc: _blocJouer,
                   builder: (context, state) {
-                    // if (state is BlocStateUninitialized ||
-                    //     state is BlocStateLoading) {
-                    return Column(
-                      children: List.generate(3, (index) => matchShimmer()),
+                    if (state is BlocStateUninitialized ||
+                        state is BlocStateLoading) {
+                      return Column(
+                        children: List.generate(3, (index) => matchShimmer()),
+                      );
+                    }
+                    if (state is BlocStateError) {
+                      debugPrint("============= IS ERROR ==============");
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: SvgPicture.asset(
+                                'asset/images/error_server.svg',
+                                height: 90.0,
+                                width: 90.0,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Erreur survenue",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w100),
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                    if (state is BlocStateLoaded) {
+                      if (state.data == null || state.data.isEmpty) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'asset/images/empty.svg',
+                                height: 150.0,
+                                width: 150.0,
+                                alignment: Alignment.center,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Aucun médicament enregistré",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w100),
+                              )
+                            ],
+                          ),
+                        );
+                      } else {
+                        return Column(
+                            // children: List.generate(
+                            //     state.data.length,
+                            //     (index) => ListPost(
+                            //         screenH: screenH,
+                            //         screenW: screenW,
+                            //         post: state.data[index]))
+                            );
+                      }
+                    }
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'asset/images/error_server.svg',
+                            height: 150.0,
+                            width: 150.0,
+                            alignment: Alignment.center,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            "Erreur survenue",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w100),
+                          )
+                        ],
+                      ),
                     );
-                    // }
-                    // if (state is BlocStateError) {
-                    //   return Center(
-                    //     child: Column(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         SvgPicture.asset(
-                    //           'asset/images/error_server.svg',
-                    //           height: 150.0,
-                    //           width: 150.0,
-                    //           alignment: Alignment.center,
-                    //         ),
-                    //         const SizedBox(
-                    //           height: 10,
-                    //         ),
-                    //         const Text(
-                    //           "Erreur survenue",
-                    //           style: TextStyle(
-                    //               fontSize: 20,
-                    //               fontWeight: FontWeight.w100),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   );
-                    // }
-                    // if (state is BlocStateLoaded) {
-                    //   if (state.data == null || state.data.isEmpty) {
-                    //     return Center(
-                    //       child: Column(
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         children: [
-                    //           SvgPicture.asset(
-                    //             'asset/images/empty.svg',
-                    //             height: 150.0,
-                    //             width: 150.0,
-                    //             alignment: Alignment.center,
-                    //           ),
-                    //           const SizedBox(
-                    //             height: 10,
-                    //           ),
-                    //           const Text(
-                    //             "Aucun médicament enregistré",
-                    //             style: TextStyle(
-                    //                 fontSize: 20,
-                    //                 fontWeight: FontWeight.w100),
-                    //           )
-                    //         ],
-                    //       ),
-                    //     );
-                    //   } else {
-                    //     return Column(
-                    //         children: List.generate(
-                    //             state.data.length,
-                    //             (index) => ListPost(
-                    //                 screenH: screenH,
-                    //                 screenW: screenW,
-                    //                 post: state.data[index])));
-                    //   }
-                    // }
-                    // return Center(
-                    //   child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                    //       SvgPicture.asset(
-                    //         'asset/images/error_server.svg',
-                    //         height: 150.0,
-                    //         width: 150.0,
-                    //         alignment: Alignment.center,
-                    //       ),
-                    //       const SizedBox(
-                    //         height: 10,
-                    //       ),
-                    //       const Text(
-                    //         "Erreur survenue",
-                    //         style: TextStyle(
-                    //             fontSize: 20, fontWeight: FontWeight.w100),
-                    //       )
-                    //     ],
-                    //   ),
-                    // );
                   }),
               // Column(
               //   mainAxisAlignment: MainAxisAlignment.center,

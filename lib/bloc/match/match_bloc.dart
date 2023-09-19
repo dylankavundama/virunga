@@ -22,6 +22,7 @@ class MatchBloc extends Bloc<BlocEvent, BlocState> {
   void _onBlocEventFetch(event, emit) async {
     emit(BlocStateLoading());
     try {
+      // emit(BlocStateError(error: null));
       // final data = await fetchAllArticles(search: event.search);
       final data = await Supabase.instance.client
           .from('Match')
