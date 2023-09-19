@@ -28,7 +28,7 @@ class PostVideoWidget extends StatelessWidget {
             Center(
               child: Stack(
                 children: [
-                  Image.asset(
+                  Image.network(
                     image,
                     fit: BoxFit.cover,
                     height: screenHeight * 0.3,
@@ -48,7 +48,7 @@ class PostVideoWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: screenHeight * 0.08,
               width: screenWidth,
               child: Column(
