@@ -4,6 +4,7 @@ class BlocEventSummaryAllFetch extends BlocEvent {
   final String? data;
   BlocEventSummaryAllFetch({this.data});
   @override
+  @override
   String toString() => 'BlocEventSummaryAllFetch';
 }
 
