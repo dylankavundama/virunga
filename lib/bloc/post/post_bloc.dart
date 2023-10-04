@@ -21,7 +21,10 @@ class PostBloc extends Bloc<BlocEvent, BlocState> {
     emit(BlocStateLoading());
     try {
       // final data = await fetchAllArticles(search: event.search);
-      final data = await Supabase.instance.client.from('Post').select();
+      final data = await Supabase.instance.client
+          .from('Post')
+          .select()
+          .order('id', ascending: false);
       debugPrint(data.toString());
       if (data == null) {
         emit(BlocStateError(error: null));

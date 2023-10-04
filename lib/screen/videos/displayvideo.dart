@@ -38,9 +38,9 @@ class _DislayVideoPageState extends State<DislayVideoPage> {
       videoList = data.map((json) => Video.fromJson(json)).toList();
       videoList.shuffle();
     }
-    // setState(() {
-    //   isLoading = false;
-    // });
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
