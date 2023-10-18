@@ -107,7 +107,7 @@ class HomeState extends State<Home> {
                             );
                           } else {
                             return Column(
-                                children: List.generate(
+                                children: List?.generate(
                                     state.data.length,
                                     (index) => ListPost(
                                         screenH: screenH,
