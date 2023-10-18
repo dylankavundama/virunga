@@ -4,7 +4,6 @@ import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/block_state.dart';
 import 'package:virunga/bloc/match/match_bloc.dart';
 import 'package:virunga/screen/WIDGET/match_shimmer.dart';
-import 'package:virunga/screen/model/matchAvenir.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:virunga/screen/model/matchJouer.dart';
 
