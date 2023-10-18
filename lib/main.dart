@@ -3,6 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:virunga/screen/loading.dart';
 import 'package:virunga/screen/videos/videos.dart';
 
+import 'utils/UtilsColot.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
@@ -18,9 +20,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'EQUIPE DE FOOTBALL',
         theme: ThemeData(
           primarySwatch: Colors.green,
+          fontFamily: AppFont.primaryFont,
         ),
         home: const Loading());
   }

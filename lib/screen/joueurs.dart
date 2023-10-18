@@ -10,14 +10,11 @@ class _JoueursState extends State<Joueurs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child:Image.asset('asset/ekp.jpg')
-          ),
-        
+              padding: const EdgeInsets.only(top: 8),
+              child: Image.asset('asset/ekp.jpg')),
           const ListJoueurs(
             photo:
                 'https://fichiers.tpmazembe.com/images/football/joueurs/74d828edb70b207ff25577c3e4fdd04daea51a64_1670179080_1670620624_1671370446_1677428025_1677428077_1678628424_1680436370.jpg',
@@ -178,18 +175,18 @@ class ListJoueurs extends StatelessWidget {
             ListTile(
               onTap: () => print('Tapped ListTileObject TheMoon'),
               leading: CircleAvatar(
-                radius:40,
+                radius: 40,
                 backgroundImage: NetworkImage(photo),
               ),
               title: Text(nom),
               subtitle: Text(poste),
               trailing: Text(
-                  nat,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold),
-                ),
+                nat,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
