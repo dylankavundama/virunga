@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/block_state.dart';
@@ -31,7 +32,6 @@ class HomeState extends State<Home> {
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
-      // backgroundColor: Colors.white12,
       body: SingleChildScrollView(
         child: Padding(
             padding: const EdgeInsets.all(8),
@@ -39,7 +39,6 @@ class HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //  AppbarW(screenH: screenH, screenW: screenW),
                   const SizedBox(
                     height: 10,
                   ),
@@ -97,7 +96,7 @@ class HomeState extends State<Home> {
                                     height: 10,
                                   ),
                                   const Text(
-                                    "Aucun médicament enregistré",
+                                    "Erreur",
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w100),
@@ -107,7 +106,7 @@ class HomeState extends State<Home> {
                             );
                           } else {
                             return Column(
-                                children: List?.generate(
+                                children: List.generate(
                                     state.data.length,
                                     (index) => ListPost(
                                         screenH: screenH,
@@ -140,17 +139,6 @@ class HomeState extends State<Home> {
                   // ),
                 ])),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //     onPressed: () async {
-      //       await Supabase.instance.client.from('Post').insert({
-      //         'image': 'kabasha',
-      //         'titre': 'Match kabasha vs dauphin',
-      //         'description': 'Stade de volcans'
-      //       }).then((value) {
-      //         debugPrint(value.toString());
-      //       });
-      //     },
-      //     child: const Icon(Icons.add)),
     );
   }
 }
@@ -235,12 +223,62 @@ class ListPost extends StatelessWidget {
   }
 }
 
-class TitreAppW extends StatelessWidget {
+class TitreAppW extends StatefulWidget {
   const TitreAppW({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<TitreAppW> createState() => _TitreAppWState();
+}
+
+class _TitreAppWState extends State<TitreAppW> {
+  @override
+  late TextEditingController _controller = TextEditingController();
+  late TextEditingController montant = TextEditingController();
+  String name = '';
+  void inistate() {
+    super.initState();
+    _controller = TextEditingController();
+    montant = TextEditingController();
+  }
+
+  void dispose() {
+    _controller.dispose();
+    montant.dispose();
+    super.dispose();
+  }
+
+  Future<String?> openDia() => showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text('Entrer un montant'),
+            content: TextField(
+              autofocus: true,
+              maxLength: 8,
+              decoration: const InputDecoration(
+                hintText: ("en Fc"),
+              ),
+              controller: _controller,
+            ),
+            actions: [
+              TextButton(
+                onPressed: submit,
+                child: const Text('Envoyer'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Quitter"),
+              ),
+            ],
+          ));
+
+  void submit() {
+    Navigator.of(context).pop(_controller.text);
+  }
+
   Widget build(BuildContext context) {
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
@@ -268,13 +306,25 @@ class TitreAppW extends StatelessWidget {
           const SizedBox(
             height: 14,
           ),
-          const Text(
-            "News",
-            style: TextStyle(
-                fontFamily: 'roboto',
-                color: Colors.black,
-                fontSize: 25,
-                fontWeight: FontWeight.bold),
+          Shimmer.fromColors(
+            baseColor: Colors.green,
+            highlightColor: Color.fromRGBO(255, 255, 255, 1),
+            child: TextButton(
+              onPressed: () async {
+                final name = await openDia();
+                if (name == null || name.isEmpty) return;
+
+                setState(() => this.name = name);
+              },
+            child: const Text(
+                "FAITE UNE CONTRIBUTION",
+                style: TextStyle(
+                    fontFamily: 'roboto',
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
         ],
       ),
