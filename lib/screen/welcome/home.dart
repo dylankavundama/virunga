@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -5,9 +6,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/block_state.dart';
 import 'package:virunga/bloc/post/post_bloc.dart';
+import 'package:virunga/modal/paiement.dart';
 import 'package:virunga/screen/WIDGET/post_shimmer.dart';
 import 'package:virunga/screen/welcome/Detail.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:virunga/utils/UtilsColot.dart';
 
 import '../model/post.dart';
 
@@ -288,10 +291,51 @@ class _TitreAppWState extends State<TitreAppW> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            'asset/logo.jpg',
-            width: screenW * 0.16,
-            fit: BoxFit.cover,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(
+                'asset/logo.jpg',
+                width: screenW * 0.10,
+                fit: BoxFit.cover,
+              ),
+              TextButton(
+                  onPressed: () => {
+                        showCupertinoModalPopup(
+                            context: context,
+                            builder: (context) {
+                              return const Center(
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.all(.0),
+                                        child: ModalPaiement(),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            })
+                      },
+                  style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.green),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ))),
+                  child: const Text(
+                    "Contribution",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400),
+                  ))
+            ],
           ),
           const Center(
             child: Text(
@@ -306,26 +350,26 @@ class _TitreAppWState extends State<TitreAppW> {
           const SizedBox(
             height: 14,
           ),
-          Shimmer.fromColors(
-            baseColor: Colors.green,
-            highlightColor: Color.fromRGBO(255, 255, 255, 1),
-            child: TextButton(
-              onPressed: () async {
-                final name = await openDia();
-                if (name == null || name.isEmpty) return;
+          // Shimmer.fromColors(
+          //   baseColor: Colors.green,
+          //   highlightColor: Color.fromRGBO(255, 255, 255, 1),
+          //   child: TextButton(
+          //     onPressed: () async {
+          //       final name = await openDia();
+          //       if (name == null || name.isEmpty) return;
 
-                setState(() => this.name = name);
-              },
-            child: const Text(
-                "FAITE UNE CONTRIBUTION",
-                style: TextStyle(
-                    fontFamily: 'roboto',
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
+          //       setState(() => this.name = name);
+          //     },
+          //   child: const Text(
+          //       "FAITE UNE CONTRIBUTION",
+          //       style: TextStyle(
+          //           fontFamily: 'roboto',
+          //           color: Colors.black,
+          //           fontSize: 18,
+          //           fontWeight: FontWeight.bold),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
