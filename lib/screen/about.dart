@@ -28,7 +28,7 @@ class _aboutState extends State<about> {
                 child: SizedBox(
                   width: w,
                   child: const Text(
-                    "Cette application a été conçue par les apprenants de la CFPI (Centre de Formation Professionnelle de l'ISIG) au programme de la programmation mobile mobule 1",
+                    "Cette application a été conçue par les apprenants du CFPI (Centre de Formation Professionnelle de l'ISIG) au programme de la programmation mobile Mobule 1",
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         color: Colors.grey,
@@ -144,44 +144,56 @@ class _aboutState extends State<about> {
                 ],
               ),
             ),
-            Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    launch('+243817675404');
-                    // launchUrl('+243817675404',
-                    //     mode: LaunchMode.externalApplication,
-                    //     webOnlyWindowName: "",
-                    //     webViewConfiguration: const WebViewConfiguration(
-                    //         enableJavaScript: true,
-                    //         enableDomStorage: true,
-                    //         headers: {"Content-Type": "application/jso"}));
-                  },
-                  child: const ListTile(
-                    title: Text('+243817675404',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    leading: FaIcon(
-                      FontAwesomeIcons.whatsapp,
-                      color: Colors.green,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Contactez-nous",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    launch('+243998874188');
-                  },
-                  child: const ListTile(
-                    title: Text('+243998874188',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    leading: FaIcon(
-                      FontAwesomeIcons.whatsapp,
-                      color: Colors.green,
+                  GestureDetector(
+                    onTap: () {
+                      launch('+243817675404');
+                      // launchUrl('+243817675404',
+                      //     mode: LaunchMode.externalApplication,
+                      //     webOnlyWindowName: "",
+                      //     webViewConfiguration: const WebViewConfiguration(
+                      //         enableJavaScript: true,
+                      //         enableDomStorage: true,
+                      //         headers: {"Content-Type": "application/jso"}));
+                    },
+                    child: const ListTile(
+                      title: Text('+243817675404',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      leading: FaIcon(
+                        FontAwesomeIcons.whatsapp,
+                        color: Colors.green,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  GestureDetector(
+                    onTap: () {
+                      launch('+243998874188');
+                    },
+                    child: const ListTile(
+                      title: Text('+243998874188',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      leading: FaIcon(
+                        FontAwesomeIcons.whatsapp,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),

@@ -309,7 +309,10 @@ class _TitreAppWState extends State<TitreAppW> {
                                 child: SingleChildScrollView(
                                   child: Column(
                                     children: <Widget>[
-                                      ModalPaiement()
+                                      Padding(
+                                        padding: EdgeInsets.all(.0),
+                                        child: ModalPaiement(),
+                                      )
                                     ],
                                   ),
                                 ),

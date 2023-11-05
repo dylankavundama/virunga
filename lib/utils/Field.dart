@@ -36,7 +36,7 @@ Widget buildTextField({
       // ignore: prefer_const_constructors
       style: TextStyle(
         fontWeight: FontWeight.w900,
-        fontSize: 20,
+        fontSize: 18,
       ),
       decoration: InputDecoration(
         enabledBorder: outlineBorder(color: Colors.grey.shade300),
