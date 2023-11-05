@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -5,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:virunga/bloc/bloc_event.dart';
 import 'package:virunga/bloc/block_state.dart';
 import 'package:virunga/bloc/post/post_bloc.dart';
+import 'package:virunga/modal/paiement.dart';
 import 'package:virunga/screen/WIDGET/post_shimmer.dart';
 import 'package:virunga/screen/welcome/Detail.dart';
 import 'package:flutter_svg/svg.dart';
@@ -299,7 +301,21 @@ class _TitreAppWState extends State<TitreAppW> {
                 fit: BoxFit.cover,
               ),
               TextButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                        showCupertinoModalPopup(
+                            context: context,
+                            builder: (context) {
+                              return const Center(
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: <Widget>[
+                                      ModalPaiement()
+                                    ],
+                                  ),
+                                ),
+                              );
+                            })
+                      },
                   style: ButtonStyle(
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
